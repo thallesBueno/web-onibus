@@ -7,6 +7,8 @@ function App() {
   const [cars, setCars] = useState([]);
   const [itinerario, setItinerario] = useState([]);
 
+  const api_url = process.env.REACT_APP_API_URL;
+
   const config =  {
     center: {
       lat: -30.03,
@@ -17,11 +19,11 @@ function App() {
 
   useEffect(async () => {
     setInterval(async () => {
-      const response = await axios.get('http://localhost:4000/');
+      const response = await axios.get(api_url);
       setCars(response.data.veiculos);
     }, 500);
 
-    const response = await axios.get('http://localhost:4000/itinerario');
+    const response = await axios.get(api_url + 'itinerario');
     setItinerario(response.data.itinerarios);
 
   }, []);
