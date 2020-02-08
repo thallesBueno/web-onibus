@@ -6,9 +6,8 @@ import './App.css';
 function App() {
   const [cars, setCars] = useState([]);
   const [itinerario, setItinerario] = useState([]);
-  const [myCoords, setMyCoords] = useState({});
 
-  const sla =  {
+  const config =  {
     center: {
       lat: -30.03,
       lng: -51.23
@@ -25,23 +24,21 @@ function App() {
     const response = await axios.get('http://localhost:4000/itinerario');
     setItinerario(response.data.itinerarios);
 
-    navigator.geolocation.getCurrentPosition(pos => setMyCoords(pos.coords));
   }, []);
 
 
 
   return (
       <GoogleMapReact
-          defaultCenter={sla.center}
-          defaultZoom={sla.zoom}
+          defaultCenter={config.center}
+          defaultZoom={config.zoom}
       >
         {itinerario.map(({ coordX , coordY}) => (
           <div className="point" lat={coordY} lng={coordX} />
           ))}
         {cars.map(({lat, long, numVeicGestor}) => (
-          <div className="thalles" lat={lat} lng={long}>{numVeicGestor}</div>
+          <div className="bus" lat={lat} lng={long}>{numVeicGestor}</div>
         ))}
-        <div className="thalles" lat={myCoords.latitude} lng={myCoords.longitude}>thallles</div>
       </GoogleMapReact>
   );
 }
